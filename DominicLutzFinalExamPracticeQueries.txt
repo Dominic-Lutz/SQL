@@ -1,0 +1,44 @@
+
+--1/ list the product category id, and the product category name from the prductCategory table.
+
+	SELECT ProductCategoryID, Name
+	FROM SalesLT.ProductCategory
+
+--2/ List the product ID, Product name, List price, and ProductModelID for all product models 6, 11, 33, and 9.
+
+	SELECT ProductID, Name, ListPrice, ProductModelID
+	FROM SalesLT.Product
+	WHERE ProductModelID IN (6, 11, 33, 9)
+
+--3/ What is the average list price per product category? 
+	
+	SELECT AVG(ListPrice) AS 'Average List Price', ProductCategoryID
+	FROM SalesLT.Product
+	GROUP BY ProductCategoryID
+
+--4/ Count all the products by category (for each category tell me the number of products there is)
+
+	SELECT ProductCategoryID, COUNT(ProductID) AS 'Number of Products'
+	FROM SalesLT.Product
+	GROUP BY ProductCategoryID
+
+--5 List the Names of Categories of Products and the name of products in that category.
+
+	SELECT pc.Name, p.Name
+	FROM SalesLT.ProductCategory pc 
+		JOIN SalesLt.Product p ON pc.ProductCategoryID = p.ProductCategoryID
+
+--6/ List the product category name, the average list price of the products in that category for categories that have an average list price > $500
+
+	SELECT pc.Name, AVG(ListPrice) AS 'Average List Price'
+	FROM SalesLT.ProductCategory pc 
+		JOIN SalesLt.Product p ON pc.ProductCategoryID = p.ProductCategoryID
+	GROUP BY pc.Name
+	HAVING AVG(ListPrice) > 500
+
+--7/ List the category name, the product name for all products with listprice above $100 and below $200 included that have ‘ET’ an the end of their name.
+
+	SELECT pc.Name, p.Name
+	FROM SalesLT.ProductCategory pc 
+		JOIN SalesLt.Product p ON pc.ProductCategoryID = p.ProductCategoryID
+	WHERE ListPrice BETWEEN 100 AND 200 AND p.Name LIKE '%ET'

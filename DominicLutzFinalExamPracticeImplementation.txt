@@ -1,0 +1,48 @@
+USE master
+GO
+
+CREATE DATABASE LeslieAutoSales
+GO
+
+USE LeslieAutoSales
+GO
+
+CREATE TABLE Salesperson (
+SP_Number INT PRIMARY KEY,
+SP_Name VARCHAR(20),
+SP_Phone INT,
+SP_Years INT
+)
+GO
+
+CREATE TABLE Customer (
+C_Number INT PRIMARY KEY,
+C_Name VARCHAR(20),
+C_Address VARCHAR(50),
+LastPurchasePrice MONEY
+)
+
+GO
+
+CREATE TABLE Vehicle (
+VIN INT PRIMARY KEY,
+V_Manuf VARCHAR(20),
+V_Model VARCHAR(20),
+V_Year INT,
+V_StickerPrice MONEY,
+Salesperson INT,
+Customer INT,
+FOREIGN KEY(Salesperson) REFERENCES Salesperson(SP_Number),
+FOREIGN KEY(Customer) REFERENCES Customer(C_Number)
+)
+GO
+
+CREATE TABLE Sales (
+Salesperson INT,
+Customer INT,
+S_Price MONEY,
+S_Date DATE,
+FOREIGN KEY(Salesperson) REFERENCES Salesperson(SP_Number),
+FOREIGN KEY(Customer) REFERENCES Customer(C_Number),
+CONSTRAINT Pk_sales PRIMARY KEY (Salesperson, Customer)
+)
